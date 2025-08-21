@@ -1,50 +1,26 @@
-[![Build](https://img.shields.io/github/actions/workflow/status/jwsmart/ibm/python-ci.yml?branch=main)](https://github.com/jwsmart/ibm/actions)
-[![Last Commit](https://img.shields.io/github/last-commit/jwsmart/ibm)](https://github.com/jwsmart/ibm/commits/main)
-[![License](https://img.shields.io/github/license/jwsmart/ibm)](LICENSE)
-[![Issues](https://img.shields.io/github/issues/jwsmart/ibm)](https://github.com/jwsmart/ibm/issues)
-[![Stars](https://img.shields.io/github/stars/jwsmart/ibm?style=social)](https://github.com/jwsmart/ibm/stargazers)
+# AWS DevOps Automation Project
 
-# AWS Automation Toolkit
+This repository contains:
+- 📖 Jekyll documentation site (`/docs`)
+- ⚙️ GitHub Actions CI pipeline
+- 🧪 Python unit tests
+- ☁️ Terraform and CloudFormation infrastructure templates
+- 🧠 Lambda function source code
 
-A comprehensive, multi-service AWS automation toolkit using Python and infrastructure-as-code (IaC). Includes hands-on scripts, templates, and testing framework.
+## Features
 
-## 🚀 Features
+- Copy files between S3 buckets
+- Parse logs and stream to Redshift or DynamoDB
+- Trigger SageMaker ML training jobs via automation
 
-- Move files between S3 buckets
-- Parse logs and push to DynamoDB or Redshift
-- Trigger ML training jobs with SageMaker
-- Terraform IAM role automation
-- CloudFormation DynamoDB + Lambda deployment
-- Jupyter Notebook and Python script versions
-- Unit tests and CI/CD pipeline with GitHub Actions
+## Usage
 
-## 🧪 Testing
+1. Deploy infrastructure using Terraform or CloudFormation.
+2. Upload Lambda code to S3.
+3. Configure event triggers (e.g., S3 PUT → Lambda).
+4. Monitor logs via CloudWatch.
 
-Uses `pytest` to validate AWS automation logic with mock dependencies.
+## Deployment Notes
 
-```bash
-pytest tests/
-```
-
-## 📦 Setup
-
-1. Clone the repo
-2. Create a virtual environment
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 📂 Folder Structure
-
-- `scripts/` - Python scripts for AWS tasks
-- `notebooks/` - Jupyter version of automation
-- `templates/` - Terraform and CloudFormation IaC
-- `docs/` - PDF guides and text walkthroughs
-- `samples/` - Log file examples
-- `tutorial/` - Teaching and video script
-- `tests/` - Unit tests
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+- Enable GitHub Pages under `/docs` folder for live site.
+- Pushes to main trigger CI tests via GitHub Actions.
