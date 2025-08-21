@@ -1,3 +1,5 @@
-title: AWS DevOps Toolkit
+title: AWS Automation Toolkit
+description: Documentation site for AWS automation project
 theme: minima
-markdown: kramdown
+plugins:
+  - jekyll-feed
