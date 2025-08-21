@@ -1,0 +1,20 @@
+import boto3
+
+s3 = boto3.client('s3')
+
+source_bucket = 'my-source-bucket'
+destination_bucket = 'my-destination-bucket'
+file_key = 'logs/2025/08/logfile.txt'
+
+# Copy the file
+copy_source = {
+    'Bucket': source_bucket,
+    'Key': file_key
+}
+
+s3.copy(copy_source, destination_bucket, file_key)
+print(f"Copied {file_key} to {destination_bucket}")
+
+# Optional: delete the original file
+s3.delete_object(Bucket=source_bucket, Key=file_key)
+print(f"Deleted {file_key} from {source_bucket}")

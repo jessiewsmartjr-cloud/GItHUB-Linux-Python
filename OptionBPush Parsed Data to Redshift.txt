@@ -1,0 +1,22 @@
+import psycopg2
+
+# Connect to Redshift
+conn = psycopg2.connect(
+    dbname='yourdb',
+    host='your-redshift-cluster-url',
+    port='5439',
+    user='yourusername',
+    password='yourpassword'
+)
+
+cur = conn.cursor()
+
+copy_sql = """
+COPY logs FROM 's3://your-bucket-name/logs/logfile.csv'
+CREDENTIALS 'aws_access_key_id=YOUR_KEY;aws_secret_access_key=YOUR_SECRET'
+CSV;
+"""
+
+cur.execute(copy_sql)
+conn.commit()
+print("Data copied to Redshift.")

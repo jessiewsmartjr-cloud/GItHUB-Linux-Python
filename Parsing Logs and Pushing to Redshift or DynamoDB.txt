@@ -1,0 +1,15 @@
+import boto3
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('AppLogs')
+
+with open('app.log') as file:
+    for line in file:
+        timestamp, level, message = line.strip().split('|')
+        table.put_item(Item={
+            'LogID': f"{timestamp}-{level}",
+            'Timestamp': timestamp,
+            'Level': level,
+            'Message': message
+        })
+print("Logs uploaded to DynamoDB.")

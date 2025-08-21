@@ -1,0 +1,50 @@
+
+import boto3
+import time
+
+sagemaker = boto3.client('sagemaker')
+
+response = sagemaker.create_training_job(
+    TrainingJobName='my-xgboost-job',
+    AlgorithmSpecification={
+        'TrainingImage': '382416733822.dkr.ecr.us-east-1.amazonaws.com/xgboost:latest',
+        'TrainingInputMode': 'File'
+    },
+    RoleArn='arn:aws:iam::123456789012:role/SageMakerExecutionRole',
+    InputDataConfig=[
+        {
+            'ChannelName': 'train',
+            'DataSource': {
+                'S3DataSource': {
+                    'S3DataType': 'S3Prefix',
+                    'S3Uri': 's3://my-bucket/training-data/',
+                    'S3DataDistributionType': 'FullyReplicated'
+                }
+            },
+            'ContentType': 'csv'
+        },
+    ],
+    OutputDataConfig={
+        'S3OutputPath': 's3://my-bucket/output/'
+    },
+    ResourceConfig={
+        'InstanceType': 'ml.m5.large',
+        'InstanceCount': 1,
+        'VolumeSizeInGB': 10
+    },
+    StoppingCondition={
+        'MaxRuntimeInSeconds': 3600
+    }
+)
+
+print("Training job submitted:", response['TrainingJobArn'])
+
+# Optional: wait for completion
+status = 'InProgress'
+while status == 'InProgress':
+    time.sleep(60)
+    desc = sagemaker.describe_training_job(TrainingJobName='my-xgboost-job')
+    status = desc['TrainingJobStatus']
+    print("Status:", status)
+
+print("Training complete.")
