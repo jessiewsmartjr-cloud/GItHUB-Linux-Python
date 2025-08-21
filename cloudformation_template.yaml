@@ -1,0 +1,42 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Simple S3 bucket and Lambda setup
+
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-automation-bucket
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaLogsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: logs:*
+                Resource: "*"
+
+  LogProcessorLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: logProcessor
+      Handler: lambda_function.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: placeholder-bucket
+        S3Key: lambda_function_payload.zip
+      Runtime: python3.10
+      Environment:
+        Variables:
+          LOG_LEVEL: INFO
